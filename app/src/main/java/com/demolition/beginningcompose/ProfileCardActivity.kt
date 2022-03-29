@@ -16,11 +16,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.demolition.beginningcompose.models.UserProfile
 import com.demolition.beginningcompose.ui.theme.MyTheme
 
@@ -114,12 +119,23 @@ fun ProfilePicture(picId: Int, contentDesc: String, borderStrokeColor: Color) {
         shape = CircleShape,
         border = BorderStroke(width = 2.dp, color = borderStrokeColor)
     ) {
-        Image(
-            painter = painterResource(id = picId),
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data("https://avatars.githubusercontent.com/u/76570320?v=4")
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.placeholder),
             contentDescription = contentDesc,
-            modifier = Modifier.size(80.dp),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.clip(CircleShape)
+                .size(72.dp)
         )
+//        Image(
+//            painter = painterResource(id = picId),
+//            contentDescription = contentDesc,
+//            modifier = Modifier.size(80.dp),
+//            contentScale = ContentScale.Crop
+//        )
     }
 
 }
